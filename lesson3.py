@@ -133,6 +133,7 @@ assert identity_matrix(5) == [[1, 0, 0, 0, 0],
                               [0, 0, 0, 0, 1]]
 
 friend_matrix = []
-friends_of_five = [i
-                  for i, is_friend in enumerate(friend_matrix[5])
-                  if is_friend]
+#friends_of_five = [i
+     #             for i, is_friend in enumerate(friend_matrix[5])
+      #          if is_friend]
+#
