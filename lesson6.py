@@ -84,7 +84,7 @@ for _ in range(1000):
         extreme_value_count += 1
 
 
-assert 59 < extreme_value_count < 65, f'{extreme_value_count}'
+#assert 59 < extreme_value_count < 65, f'{extreme_value_count}'
 two_sided_p_value(531.5, mu_0, sigma_0)
 
 upper_p_value = normal_probability_above
@@ -120,3 +120,40 @@ def estimated_parameters(N: int, n: int):
     p = n / N
     sigma = math.sqrt(p * (1 - p) / N)
     return p, sigma
+
+# for a_b_test_statistic we use null hypothesis
+def a_b_test_statistic(N_A: int, n_A: int, N_B: int, n_B: int) -> float:
+    p_A, sigma_A = estimated_parameters(N_A, n_A)
+    p_B, sigma_B = estimated_parameters(N_B, n_B)
+    return (p_B - p_A) / math.sqrt(sigma_A ** 2 + sigma_B ** 2)
+
+# if ad A takes 200 clicks from 1000 viewers and ad B 180 from 1000 then z = expected value of  typical diff gaussian
+
+
+z = a_b_test_statistic(1000, 200, 1000, 180)  # -1.14
+
+# Probability for this difference if mean values where equal
+
+two_sided_p_value(z)  # 0.254
+
+# If add B took 150 clicks, then the probability for this difference if p_a and p_b where equal is:
+
+
+z = a_b_test_statistic(1000, 200, 1000, 150)  # -2.94
+two_sided_p_value(z)  # 0.003
+# Very small probability for such a click difference if ad a and b where  same effective
+
+
+def B(alpha: float, beta: float) -> float:  # B is a normalization constant such as total probability equals 1
+    return math.gamma(alpha) * math.gamma(beta) / math.gamma(alpha + beta)
+
+
+def b_pdf(x: float, alpha: float, beta: float) -> float:
+     if x <= 0 or x >= 1:
+         return 0
+     return  x ** (alpha - 1) * (1 - x) ** (beta - 1) / B(alpha, beta)
+
+# In general the weight of this distribution is set around value : alpha / (alpha + beta)
+# the higher a and b are, the more narrow the distro is
+# if a greater than b, the weight is close to 1
+# if b greater than a, the weight is close to 0
