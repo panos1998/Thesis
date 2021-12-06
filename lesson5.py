@@ -49,7 +49,9 @@ SQR_TWO_PI = math.sqrt(2*math.pi)
 def normal_pdf(x: float, mu: float = 0, sigma: float = 1) -> float:
     return math.exp(-(x-mu) ** 2) / 2 / sigma ** 2 / (SQR_TWO_PI * sigma)
 
+
 import matplotlib.pyplot as plt
+
 
 xs = [x / 10.0 for x in range(-50, 50)]
 plt.plot(xs, [normal_pdf(x, sigma=1) for x in xs], '-', label='mu=0,sigma=1')
@@ -73,6 +75,7 @@ plt.plot(xs, [normal_cdf(x, mu=-1) for x in xs], '-.', label='mu=-1, sigma =1')
 plt.legend(loc=4)
 plt.title("Μερικές Κανονικές CDF")
 plt.show()
+
 
 def inverse_normal_cdf(p: float,
                        mu: float = 0,

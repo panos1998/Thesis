@@ -122,7 +122,7 @@ def covariance(xs: List[float], ys: List[float]) -> float:
 def correlation(xs: List[float], ys: List[float]) -> float:
     stdev_x =standard_deviation(xs)
     stdev_y = standard_deviation(ys)
-    if stdev_x >0 and stdev_y >0:
+    if stdev_x > 0 and stdev_y > 0:
         return covariance(xs, ys) / stdev_x /stdev_y
     else:
         return 0
