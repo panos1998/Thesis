@@ -2,6 +2,10 @@ import glob
 from typing import Set
 import re
 
+
+def drop_final_s(word):
+    return re.sub("s$", "", word)
+
 def tokenize(text: str) -> Set[str]:
     text = text.lower()                         # Convert to lowercase,
     all_words = re.findall("[a-z0-9']+", text)  # extract the words, and
@@ -18,6 +22,7 @@ class Message(NamedTuple):
 from typing import List, Tuple, Dict, Iterable
 import math
 from collections import defaultdict
+from typing import  Callable
 
 class NaiveBayesClassifier:
     def __init__(self, k: float = 0.5, threshold: float = 10) -> None:
@@ -161,7 +166,7 @@ from collections import Counter
 predictions = [(message, model.predict(message.text))
                for message in test_messages]
 
-confusion_matrix = Counter((message.is_spam, spam_probability >0.5)
+confusion_matrix = Counter((message.is_spam, spam_probability > 0.5)
                            for message, spam_probability in predictions)
 
 print(confusion_matrix)
@@ -175,3 +180,5 @@ def p_spam_given_token(token: str, model: NaiveBayesClassifier) -> float:
 words = sorted(model.tokens, key=lambda t: p_spam_given_token(t, model))
 print("spammiest_words", words[-10:])
 print("hammiest_words", words[:10])
+
+
