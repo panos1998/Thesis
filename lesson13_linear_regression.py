@@ -1,4 +1,3 @@
-
 def predict(alpha:  float, beta: float, x_i: float) -> float:
     return beta * x_i + alpha
 
