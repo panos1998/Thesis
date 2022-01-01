@@ -192,3 +192,47 @@ def bottom_up_cluster(inputs: List[Vector],
 
 
 base_cluster = bottom_up_cluster(inputs)
+
+
+def generate_clusters(base_cluster: Cluster,
+                      num_clusters: int) -> List[Cluster]:
+    clusters = [base_cluster]
+    while len(clusters) < num_clusters:
+        next_cluster = min(clusters, key=get_merge_order)
+        clusters = [c for c in clusters if c != next_cluster]
+        clusters.extend(get_children(next_cluster))
+    return clusters
+
+
+three_clusters = [get_values(cluster)
+                  for cluster in generate_clusters(base_cluster, 3)]
+
+
+for i, cluster, marker, color in zip([1, 2, 3],
+                                     three_clusters,
+                                     ['D', 'o', '*'],
+                                     ['r', 'g', 'b']):
+    xs, ys = zip(*cluster)
+    plt.scatter(xs, ys, color=color, marker=marker)
+    x, y = vector_mean(cluster)
+    plt.plot(x, y, marker='$' + str(i) + '$', color='black')
+plt.title("Τοποθεσιες χρηστων --3 ομαδες απο κατω προς τα επανω, Min")
+plt.xlabel("πληθος τετραγωνων ανατολικα του κεντρου")
+plt.ylabel("πληθος τετραγωνων βορείως του κεντρου")
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
